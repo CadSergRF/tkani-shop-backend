@@ -6,6 +6,6 @@ const adminRoutes = express.Router();
 
 adminRoutes
   .use('/products', productRouter)
-  .use('/importtocsv', importExportRouter);
+  .use('/importexport', importExportRouter);
 
 export default adminRoutes;

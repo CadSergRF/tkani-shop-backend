@@ -15,6 +15,7 @@ dotenv.config();
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+console.log(`URL базы данных ${mongoConfig.mongo.url}`)
 mongoose.connect(mongoConfig.mongo.url)
   .then(
     () => { console.log(`Удачное подключение к базе данных: ${mongoConfig.mongo.dbName}`) },
