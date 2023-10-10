@@ -3,6 +3,7 @@ import ProductItem from '../models/product.model.js';
 import { Request, Response, NextFunction } from 'express';
 import { Parser } from 'json2csv';
 import { importExportModel } from '../config/importExport.config.js';
+import fileParse from '../middleware/parceCSV.middleware.js';
 
 const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -45,7 +46,6 @@ const exportToCSV = async (req: Request, res: Response, next: NextFunction) => {
     const fields = importExportModel;
     const parser = new Parser({ fields });
     const csvExport = parser.parse(cards);
-    console.log(csvExport)
 
     res
       .setHeader("Content-Type", "text/csv")
@@ -60,14 +60,12 @@ const exportToCSV = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 const importFromCSV = async (req: Request, res: Response, next: NextFunction) => {
+  const result = fileParse();
+  console.log('Product req ' + result);
+
   try {
-    const filedata = req.file;
-    console.log('req ' + req)
-    console.log(filedata);
-    if (!filedata)
-      res.send("Ошибка при загрузке файла");
-    else
-      res.send({ message: 'Файл загружен' });
+    console.log('Product req ' + req)
+    res.send({ message: 'Файл загружен' });
   } catch (error) {
     console.log('Ошибка')
     next;
