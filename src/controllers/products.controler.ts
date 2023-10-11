@@ -60,12 +60,12 @@ const exportToCSV = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 const importFromCSV = async (req: Request, res: Response, next: NextFunction) => {
-  const result = fileParse();
-  console.log('Product req ' + result);
-
   try {
-    console.log('Product req ' + req)
-    res.send({ message: 'Файл загружен' });
+    const result = fileParse();
+    res
+      .status(200)
+      .send({ message: 'Файл загружен' })
+      .send(result);
   } catch (error) {
     console.log('Ошибка')
     next;
@@ -73,4 +73,3 @@ const importFromCSV = async (req: Request, res: Response, next: NextFunction) =>
 }
 
 export default { getAllProducts, createProduct, exportToCSV, importFromCSV };
-// export default { getAllProducts, createProduct, exportToCSV };
