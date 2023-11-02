@@ -15,6 +15,10 @@ const getAllProducts = async (req: Request, res: Response, next: NextFunction) =
 const createProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const cardsParams = req.body;
+    const findDuplicate = await ProductItem.find<IProduct>({ articul: req.body.articul });
+    if (findDuplicate) {
+      throw new Error('Карточка товара с указанным артикулом уже существует');
+    }
     const newProduct = new ProductItem(cardsParams);
     const card = await newProduct.save();
     res.status(200).json(card);
@@ -26,7 +30,7 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
 
 const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const card = await ProductItem.findById<IProduct>(req.body.id);
+    const card = await ProductItem.findById<IProduct>(req.params.id);
     if (!card) {
       throw new Error('Карточка с указанным id не найдена');
     }
