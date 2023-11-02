@@ -38,4 +38,18 @@ const deleteProduct = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
-export default { getAllProducts, createProduct, deleteProduct };
+const editProduct = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const card = await ProductItem.findById<IProduct>(req.body.id);
+    if (!card) {
+      throw new Error('Карточка с указанным id не найдена');
+    }
+    const cardDelete = await ProductItem.deleteOne(card);
+    return res.send(cardDelete);
+  } catch (err) {
+    console.log(`Ошибка удаления карточки ${err}`);
+    next(err);
+  }
+};
+
+export default { getAllProducts, createProduct, deleteProduct, editProduct };
