@@ -1,9 +1,6 @@
-import ProductItem from '../models/product.model.js';
+import ProductItem, { IProduct } from '../models/product.model.js';
 
 import { Request, Response, NextFunction } from 'express';
-import { Parser } from 'json2csv';
-import { importExportModel } from '../config/importExport.config.js';
-import fileParse from '../middleware/parceCSV.middleware.js';
 
 const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -11,65 +8,34 @@ const getAllProducts = async (req: Request, res: Response, next: NextFunction) =
     return res.send(cards);
   } catch (err) {
     console.log(`Ошибка получения всех карточек ${err}`);
-    next;
+    next(err);
   }
 };
 
 const createProduct = async (req: Request, res: Response, next: NextFunction) => {
-  const {
-    articul,
-    name,
-    price,
-    picture,
-  } = req.body;
-
-  const newProduct = new ProductItem({
-    articul,
-    name,
-    price,
-    picture,
-  });
-
   try {
+    const cardsParams = req.body;
+    const newProduct = new ProductItem(cardsParams);
     const card = await newProduct.save();
-    res.status(200).json({ card });
+    res.status(200).json(card);
   } catch (err) {
     console.log(`Ошибка создания новой карточки ${err}`);
-    next;
+    next(err);
   }
 };
 
-const exportToCSV = async (req: Request, res: Response, next: NextFunction) => {
-
+const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const cards = await ProductItem.find();
-    const fields = importExportModel;
-    const parser = new Parser({ fields });
-    const csvExport = parser.parse(cards);
-
-    res
-      .setHeader("Content-Type", "text/csv")
-      .setHeader("Content-Disposition", "attachment: filename=productBase.csv")
-      .status(200)
-      .send(csvExport);
-
+    const card = await ProductItem.findById<IProduct>(req.body.id);
+    if (!card) {
+      throw new Error('Карточка с указанным id не найдена');
+    }
+    const cardDelete = await ProductItem.deleteOne(card);
+    return res.send(cardDelete);
   } catch (err) {
-    console.log(`Ошибка экспорта базы данных в csv: ${err}`);
-    next;
+    console.log(`Ошибка удаления карточки ${err}`);
+    next(err);
   }
-}
+};
 
-const importFromCSV = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const result = fileParse();
-    res
-      .status(200)
-      .send({ message: 'Файл загружен' })
-      .send(result);
-  } catch (error) {
-    console.log('Ошибка')
-    next;
-  }
-}
-
-export default { getAllProducts, createProduct, exportToCSV, importFromCSV };
+export default { getAllProducts, createProduct, deleteProduct };

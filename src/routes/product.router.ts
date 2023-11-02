@@ -1,8 +1,9 @@
 import express from 'express';
-import product from '../controllers/products.controler.js'
+import product from '../controllers/products.controler.js';
 
 const productRouter = express.Router();
 
+productRouter.delete('/', product.deleteProduct);
 productRouter.get('/', product.getAllProducts);
 productRouter.post('/', product.createProduct);
 

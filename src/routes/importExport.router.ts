@@ -1,11 +1,11 @@
 import express from 'express';
-import product from '../controllers/products.controler.js';
+import filecsv from '../controllers/fileCSV.controller.js'
 import { uploadCSV } from '../middleware/uploadCSV.middleware.js';
 
 const importExportRouter = express.Router();
 
 importExportRouter
-  .get('/', product.exportToCSV)
-  .post('/', uploadCSV.single('filecsv'), product.importFromCSV);
+  .get('/', filecsv.exportToCSV)
+  .post('/', uploadCSV.single('filecsv'), filecsv.importFromCSV);
 
 export default importExportRouter;
