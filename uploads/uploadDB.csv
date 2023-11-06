@@ -1,10 +1,3 @@
-"articul","name","price","picture"
-"first","товар",100,"Это картинка"
-"first","товар",100,"Это картинка"
-"first","товар",100,"Это картинка"
-"first","товар",100,"Это картинка"
-"first","товар",100,"Это картинка"
-"first","товар",100,"Это картинка"
-"артикул","название",200,"картинка"
-"артикул","название",200,"картинка"
-"артикул","название",200,"картинка"
+﻿articul,name,price,oldPrice,quantity,picture,description,characteristic_width,characteristic_picture,characteristic_color,characteristic_counryOfOrigin,characteristic_composition,characteristic_weight,seoTags_header,seoTags_description,seoTags_keyWords
+К-гл-27/1,Сатин Синий,310,350,20,Ссылка на,Сатин однотонный.,10,Однотонный,Серый,Китай,Хлопок 100%,180,undefined,Сатин серый 100% хлопок ширина: 160см плотность: 180гр,"""сатин,100% хлопок,хлопок"""
+К-гл-28,Сатин синий,310,350,15,Ссылка на,Сатин однотонный.,10,Однотонный,Серый,,Хлопок 100%,180,undefined,Сатин серый 100% хлопок ширина: 160см плотность: 180гр,"""сатин,100% хлопок,хлопок"""
