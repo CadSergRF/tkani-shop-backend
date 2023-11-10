@@ -44,16 +44,24 @@ const deleteProduct = async (req: Request, res: Response, next: NextFunction) =>
 
 const editProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const card = await ProductItem.findById<IProduct>(req.body.id);
+    const card = await ProductItem.findByIdAndUpdate<IProduct>(req.body.id, req.body);
     if (!card) {
-      throw new Error('Карточка с указанным id не найдена');
+      throw new Error('Ошибка обновления. Карточка с указанным id не найдена');
     }
-    const cardDelete = await ProductItem.deleteOne(card);
-    return res.send(cardDelete);
+    return res.send(card);
   } catch (err) {
     console.log(`Ошибка удаления карточки ${err}`);
     next(err);
   }
 };
 
-export default { getAllProducts, createProduct, deleteProduct, editProduct };
+const uploadImageProduct = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res.status(200).send({ message: 'Файл загружен' });
+  } catch (err) {
+    console.log('Ошибка в контроллере ', err);
+    next;
+  }
+};
+
+export default { getAllProducts, createProduct, deleteProduct, editProduct, uploadImageProduct };
