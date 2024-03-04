@@ -7,9 +7,7 @@ import fileParse from '../middleware/parceCSV.middleware.js';
 const exportToCSV = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const cards = await ProductItem.find();
-
     const csvExport = json2csv(cards);
-    console.log(csvExport);
 
     res
       .setHeader('Content-Type', 'text/csv')

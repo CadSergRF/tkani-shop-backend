@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": [
-      "ES6"
-    ],
+    "lib": ["ES6"],
     "module": "NodeNext",
     "rootDir": "./src",
     "resolveJsonModule": true,
@@ -17,15 +15,9 @@
     "noImplicitAny": true,
     "skipLibCheck": true
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
-  "lib": [
-    "esnext"
-  ],
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"],
+  "lib": ["esnext"],
   "ts-node": {
     "esm": true
   }
