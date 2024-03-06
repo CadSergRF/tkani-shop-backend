@@ -10,24 +10,28 @@ import { mongoConfig } from '../src/config/mongoConnect.config.js';
 
 import router from './routes/index.routes.js';
 
-
 dotenv.config();
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-console.log(`URL базы данных ${mongoConfig.mongo.url}`)
-mongoose.connect(mongoConfig.mongo.url)
-  .then(
-    () => { console.log(`Удачное подключение к базе данных: ${mongoConfig.mongo.dbName}`) },
-    err => { console.log(`Ошибка подключения к базе данных ${err}`) }
-  );
+console.log(`URL базы данных ${mongoConfig.mongo.url}`);
+mongoose.connect(mongoConfig.mongo.url).then(
+  () => {
+    console.log(`Удачное подключение к базе данных: ${mongoConfig.mongo.dbName}`);
+  },
+  (err) => {
+    console.log(`Ошибка подключения к базе данных ${err}`);
+  },
+);
 
 app
   .use(express.json())
-  .use(cors({
-    origin: '*',
-    credentials: true,
-  }))
+  .use(
+    cors({
+      origin: '*',
+      credentials: true,
+    }),
+  )
   .use(express.urlencoded({ extended: true }))
   .use('/static', express.static(__dirname + '/pics'))
   .use(cookieParser())
